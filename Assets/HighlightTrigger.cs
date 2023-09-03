@@ -83,7 +83,7 @@ public class HighlightTrigger : MonoBehaviour
         }
         else
         {
-            SceneManager.LoadScene("Intro");
+            SceneManager.LoadScene("End");
         }
     }
 }
