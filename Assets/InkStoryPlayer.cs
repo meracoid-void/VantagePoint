@@ -35,6 +35,26 @@ public class InkStoryPlayer : MonoBehaviour
         StartStoryAt("Intro");
     }
 
+    public IEnumerator CutsceneDialogue(List<GameObject> turnOn, string cutsceneStory)
+    {
+        textArea.text = "WOOSH!!! CRASH!!!";
+        options[0].transform.parent.gameObject.SetActive(true);
+        yield return new WaitForSeconds(2);
+        foreach (var obj in turnOn)
+        {
+            obj.SetActive(true);
+        }
+        if (!String.IsNullOrEmpty(cutsceneStory))
+        {
+            StartStoryAt(cutsceneStory);
+        }
+        else
+        {
+            GameManager.instance.highlightedCharacter.isCutsceneStoryDone = true;
+            GameManager.instance.highlightedCharacter.MoveToNextScene();
+        }
+    }
+
     public void StartStoryAt(string knot)
     {
         GameManager.instance.IsStoryOver = false;

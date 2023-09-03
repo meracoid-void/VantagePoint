@@ -62,11 +62,8 @@ namespace StarterAssets
 			if (dialog)
 			{
 				InkStoryPlayer.instance.MakeChoice(0);
-				if (GameManager.instance.IsStoryOver)
-				{
-					dialog = false;
-				}
-			}
+                SetEndState();
+            }
 		}
 
 		public void OnOption2(InputValue value)
@@ -74,10 +71,7 @@ namespace StarterAssets
 			if (dialog)
 			{
                 InkStoryPlayer.instance.MakeChoice(1);
-                if (GameManager.instance.IsStoryOver)
-                {
-                    dialog = false;
-                }
+                SetEndState();
             }
 		}
 
@@ -86,10 +80,7 @@ namespace StarterAssets
 			if (dialog)
 			{
                 InkStoryPlayer.instance.MakeChoice(2);
-                if (GameManager.instance.IsStoryOver)
-                {
-                    dialog = false;
-                }
+				SetEndState();
             }
 		}
 
@@ -98,10 +89,7 @@ namespace StarterAssets
 			if (dialog)
 			{
                 InkStoryPlayer.instance.MakeChoice(3);
-                if (GameManager.instance.IsStoryOver)
-                {
-                    dialog = false;
-                }
+				SetEndState();
             }
 		}
 
@@ -139,6 +127,26 @@ namespace StarterAssets
 		{
 			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
 		}
+
+		private void SetEndState()
+		{
+            if (GameManager.instance.IsStoryOver)
+            {
+				HighlightTrigger characterToTalkTo = GameManager.instance.highlightedCharacter;
+				if(characterToTalkTo != null)
+				{
+					if (characterToTalkTo.isCutsceneTrigger && !characterToTalkTo.isCutsceneStoryDone)
+					{
+						characterToTalkTo.TriggerCutscene();
+					}
+					else if (characterToTalkTo.isCutsceneTrigger && characterToTalkTo.isCutsceneStoryDone)
+					{
+						characterToTalkTo.MoveToNextScene();
+					}
+				}
+                dialog = false;
+            }
+        }
     }
 	
 }
