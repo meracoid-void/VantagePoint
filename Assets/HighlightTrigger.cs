@@ -75,7 +75,7 @@ public class HighlightTrigger : MonoBehaviour
 
     IEnumerator WaitBeforeScene()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(8);
         if (!String.IsNullOrEmpty(nextScene))
         {
 

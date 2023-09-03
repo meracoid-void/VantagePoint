@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance; // Singleton instance
     public HighlightTrigger highlightedCharacter;
+    public bool IsInDialog = true;
     public bool IsStoryOver;
 
     private void Awake()

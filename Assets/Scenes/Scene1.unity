@@ -252,6 +252,7 @@ MonoBehaviour:
   turnOnObjects: []
   cutsceneStory: 
   nextScene: 
+  isCutsceneStoryDone: 0
 --- !u!114 &80390546
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -394,6 +395,7 @@ MonoBehaviour:
   turnOnObjects: []
   cutsceneStory: 
   nextScene: 
+  isCutsceneStoryDone: 0
 --- !u!4 &113278277 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4579825387947210, guid: 988fc5747321c5e4d9f0acff90043f5f,
@@ -583,6 +585,7 @@ MonoBehaviour:
   turnOnObjects: []
   cutsceneStory: 
   nextScene: 
+  isCutsceneStoryDone: 0
 --- !u!114 &134757971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -701,6 +704,7 @@ MonoBehaviour:
   - {fileID: 1769836409}
   textArea: {fileID: 645755293}
   inkJSONAsset: {fileID: 4900000, guid: 92b0b36cf4d484c4d99e8420cc18fd76, type: 3}
+  startingStory: Intro
 --- !u!4 &162252611
 Transform:
   m_ObjectHideFlags: 0
@@ -1095,6 +1099,7 @@ MonoBehaviour:
   turnOnObjects: []
   cutsceneStory: 
   nextScene: 
+  isCutsceneStoryDone: 0
 --- !u!114 &506550581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1291,6 +1296,7 @@ MonoBehaviour:
   turnOnObjects: []
   cutsceneStory: 
   nextScene: 
+  isCutsceneStoryDone: 0
 --- !u!114 &536739867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1494,6 +1500,7 @@ MonoBehaviour:
   turnOnObjects: []
   cutsceneStory: 
   nextScene: 
+  isCutsceneStoryDone: 0
 --- !u!114 &585832240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1760,7 +1767,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 15.7592, y: 63}
+  m_AnchoredPosition: {x: 15.759201, y: -142}
   m_SizeDelta: {x: 619.3447, y: 325.0899}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &645755293
@@ -1783,14 +1790,23 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. In non vehicula
-    risus. Mauris et turpis scelerisque, egestas orci eu, lacinia sapien. Duis at
-    urna placerat, ullamcorper urna ut, sagittis purus. Pellentesque turpis ex, blandit
-    at tincidunt luctus, pharetra eu lacus. Nulla facilisi. Proin congue tincidunt
-    feugiat. Curabitur sit amet felis non tellus accumsan sollicitudin eu eget nisl.
-    Aliquam varius eros ornare pulvinar bibendum. Proin ullamcorper massa eget nisl
-    laoreet, vel imperdiet lorem pulvinar. Morbi tincidunt urna non lectus vestibulum,
-    at iaculis tellus commodo.
+  m_text: 'Nicholas: "I understand your suspicion, Mr. Miller. But I assure you,
+    I am here to help. I can prove my own innocence in time. For now, we need to
+    focus on finding the killer."Based on the proximity of the pickaxe to the corpse
+    and to each person''s position when the lights went out, the only possible suspects
+    are Jim Wilson, Rob Davis, and Hank Miller. Isn''t that right, Mr. Carter?"
+
+
+
+    Tom:
+    "I''d say so. I checked the time just before the lights went out and then again
+    when they came back on. Only a few seconds passed, not nearly enough time for
+    someone to move across the room, commit the murder, and then return to their
+    original position."
+
+
+
+    Jim: "What in tarnation?! This is hogwash!"'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ce66eafd96d543d47856482dae2cc537, type: 2}
   m_sharedMaterial: {fileID: -4621285168852124001, guid: ce66eafd96d543d47856482dae2cc537,
@@ -1854,7 +1870,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 96.46582, z: 0, w: -228.07877}
+  m_margin: {x: 0, y: -146.80304, z: 0, w: 56.393066}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -3484,6 +3500,7 @@ MonoBehaviour:
   turnOnObjects: []
   cutsceneStory: 
   nextScene: 
+  isCutsceneStoryDone: 0
 --- !u!4 &1168008881 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4453513966746856, guid: cd6ccd0946bd7e74c84b8e50127efaf9,
@@ -4045,6 +4062,7 @@ MonoBehaviour:
   turnOnObjects: []
   cutsceneStory: 
   nextScene: 
+  isCutsceneStoryDone: 0
 --- !u!136 &1340538745
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4527,6 +4545,11 @@ PrefabInstance:
       propertyPath: m_UIInputModule
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 453084650579209848, guid: 035bf1ba97d19214580cfe6f5a29fdc3,
+        type: 3}
+      propertyPath: RotationSpeed
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2862278905927072855, guid: 035bf1ba97d19214580cfe6f5a29fdc3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4991,6 +5014,7 @@ MonoBehaviour:
   turnOnObjects: []
   cutsceneStory: 
   nextScene: 
+  isCutsceneStoryDone: 0
 --- !u!1001 &1608058917
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5274,6 +5298,7 @@ MonoBehaviour:
   turnOnObjects: []
   cutsceneStory: 
   nextScene: 
+  isCutsceneStoryDone: 0
 --- !u!114 &1787532079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5509,8 +5534,9 @@ MonoBehaviour:
   - {fileID: 1250833417}
   - {fileID: 1595009667}
   - {fileID: 1513621436}
-  cutsceneStory: 
-  nextScene: 
+  cutsceneStory: CaveInCutscene
+  nextScene: Scene2
+  isCutsceneStoryDone: 0
 --- !u!136 &1838198506
 CapsuleCollider:
   m_ObjectHideFlags: 0

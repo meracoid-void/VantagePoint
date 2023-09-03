@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 using StarterAssets;
+using UnityEngine.SceneManagement;
 
 public class InkStoryPlayer : MonoBehaviour
 {
@@ -13,14 +14,16 @@ public class InkStoryPlayer : MonoBehaviour
     public Button[] options;
     public TextMeshProUGUI textArea;
     public TextAsset inkJSONAsset;
+    public string startingStory;
     private Story story;
+
+    private bool isCutScene = false;
 
     void Awake()
     {
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);  // Optional: if you want this object to persist between scenes
         }
         else
         {
@@ -32,26 +35,32 @@ public class InkStoryPlayer : MonoBehaviour
     {
         GameManager.instance.IsStoryOver = false;
         story = new Story(inkJSONAsset.text);
-        StartStoryAt("Intro");
+        if (!String.IsNullOrEmpty(startingStory))
+        {
+            StartStoryAt(startingStory);
+        }
     }
 
     public IEnumerator CutsceneDialogue(List<GameObject> turnOn, string cutsceneStory)
     {
-        textArea.text = "WOOSH!!! CRASH!!!";
-        options[0].transform.parent.gameObject.SetActive(true);
-        yield return new WaitForSeconds(2);
-        foreach (var obj in turnOn)
+        if (!isCutScene)
         {
-            obj.SetActive(true);
-        }
-        if (!String.IsNullOrEmpty(cutsceneStory))
-        {
-            StartStoryAt(cutsceneStory);
-        }
-        else
-        {
-            GameManager.instance.highlightedCharacter.isCutsceneStoryDone = true;
-            GameManager.instance.highlightedCharacter.MoveToNextScene();
+            isCutScene = true;
+            textArea.text = "WOOSH!!! CRASH!!!";
+            options[0].transform.parent.gameObject.SetActive(true);
+            yield return new WaitForSeconds(2);
+            foreach (var obj in turnOn)
+            {
+                obj.SetActive(true);
+            }
+            if (!String.IsNullOrEmpty(cutsceneStory))
+            {
+                StartStoryAt(cutsceneStory);
+            }
+            else
+            {
+                GameManager.instance.IsInDialog = false;
+            }
         }
     }
 
@@ -75,6 +84,7 @@ public class InkStoryPlayer : MonoBehaviour
 
         if(story.currentChoices.Count > 0)
         {
+            GameManager.instance.IsStoryOver = false;
             if (story.currentChoices.Count < 4)
             {
                 options[3].gameObject.SetActive(false);
@@ -96,7 +106,7 @@ public class InkStoryPlayer : MonoBehaviour
                 options[i].gameObject.GetComponentInChildren<ChoiceHandler>().choice = choice;
                 options[i].gameObject.SetActive(true);
                 var text = options[i].GetComponentInChildren<TextMeshProUGUI>();
-                text.text = choice.text;
+                text.text = i + 1 + " - " +  choice.text;
             }
         }
         else
@@ -113,8 +123,19 @@ public class InkStoryPlayer : MonoBehaviour
             choice.gameObject.SetActive(false);
         }
         GameManager.instance.IsStoryOver = true;
-        yield return new WaitForSeconds(2);
-        options[0].transform.parent.gameObject.SetActive(false);
+        if (GameManager.instance.highlightedCharacter != null && GameManager.instance.highlightedCharacter.isCutsceneTrigger && isCutScene)
+        {
+            GameManager.instance.highlightedCharacter.isCutsceneStoryDone = true;
+        }
+        yield return new WaitForSeconds(7);
+        if (GameManager.instance.IsStoryOver)
+        {
+            options[0].transform.parent.gameObject.SetActive(false);
+        }
+        if(startingStory != null && startingStory == "HesutuRecollection.sheriff_final_question")
+        {
+            SceneManager.LoadScene("End");
+        }
 
     }
 

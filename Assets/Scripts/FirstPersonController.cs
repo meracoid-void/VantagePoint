@@ -107,15 +107,6 @@ namespace StarterAssets
 			JumpAndGravity();
 			GroundedCheck();
 			Move();
-			Dialogue();
-		}
-
-		private void Dialogue()
-		{
-			if (_input.dialog)
-			{
-				Console.WriteLine("talking");
-			}
 		}
 
 		private void LateUpdate()

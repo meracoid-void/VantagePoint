@@ -12,7 +12,6 @@ namespace StarterAssets
 		public Vector2 look;
 		public bool jump;
 		public bool sprint;
-		public bool dialog = true;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -23,7 +22,7 @@ namespace StarterAssets
 
         public void OnMove(InputValue value)
 		{
-			if(!dialog)
+			if(!GameManager.instance.IsInDialog)
 				MoveInput(value.Get<Vector2>());
 		}
 
@@ -37,13 +36,13 @@ namespace StarterAssets
 
 		public void OnJump(InputValue value)
 		{
-			if(!dialog)
+			if(!GameManager.instance.IsInDialog)
 				JumpInput(value.isPressed);
 		}
 
 		public void OnSprint(InputValue value)
 		{
-			if (!dialog)
+			if (!GameManager.instance.IsInDialog)
 				SprintInput(value.isPressed);
 		}
 
@@ -59,7 +58,7 @@ namespace StarterAssets
 
 		public void OnOption1(InputValue value)
 		{
-			if (dialog)
+			if (GameManager.instance.IsInDialog)
 			{
 				InkStoryPlayer.instance.MakeChoice(0);
                 SetEndState();
@@ -68,7 +67,7 @@ namespace StarterAssets
 
 		public void OnOption2(InputValue value)
 		{
-			if (dialog)
+			if (GameManager.instance.IsInDialog)
 			{
                 InkStoryPlayer.instance.MakeChoice(1);
                 SetEndState();
@@ -77,7 +76,7 @@ namespace StarterAssets
 
 		public void OnOption3(InputValue value)
 		{
-			if (dialog)
+			if (GameManager.instance.IsInDialog)
 			{
                 InkStoryPlayer.instance.MakeChoice(2);
 				SetEndState();
@@ -86,7 +85,7 @@ namespace StarterAssets
 
 		public void OnOption4(InputValue value)
 		{
-			if (dialog)
+			if (GameManager.instance.IsInDialog)
 			{
                 InkStoryPlayer.instance.MakeChoice(3);
 				SetEndState();
@@ -95,7 +94,7 @@ namespace StarterAssets
 
 		public void DialogueInput(bool isPressed)
 		{
-			this.dialog = !this.dialog;
+            GameManager.instance.IsInDialog = !GameManager.instance.IsInDialog;
 		}
 
 		public void MoveInput(Vector2 newMoveDirection)
@@ -132,19 +131,21 @@ namespace StarterAssets
 		{
             if (GameManager.instance.IsStoryOver)
             {
-				HighlightTrigger characterToTalkTo = GameManager.instance.highlightedCharacter;
+                GameManager.instance.IsInDialog = false;
+                HighlightTrigger characterToTalkTo = GameManager.instance.highlightedCharacter;
 				if(characterToTalkTo != null)
 				{
 					if (characterToTalkTo.isCutsceneTrigger && !characterToTalkTo.isCutsceneStoryDone)
 					{
-						characterToTalkTo.TriggerCutscene();
+                        GameManager.instance.IsInDialog = true;
+                        characterToTalkTo.TriggerCutscene();
 					}
 					else if (characterToTalkTo.isCutsceneTrigger && characterToTalkTo.isCutsceneStoryDone)
 					{
 						characterToTalkTo.MoveToNextScene();
 					}
 				}
-                dialog = false;
+                
             }
         }
     }
