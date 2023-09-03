@@ -1,8 +1,7 @@
 using System;
 using UnityEngine;
-#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
-#endif
+using UnityEngine.UI;
 
 namespace StarterAssets
 {
@@ -13,7 +12,7 @@ namespace StarterAssets
 		public Vector2 look;
 		public bool jump;
 		public bool sprint;
-		public bool dialog;
+		public bool dialog = true;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -21,15 +20,16 @@ namespace StarterAssets
 		[Header("Mouse Cursor Settings")]
 		public bool cursorLocked = true;
 		public bool cursorInputForLook = true;
-#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
+
         public void OnMove(InputValue value)
 		{
-			MoveInput(value.Get<Vector2>());
+			if(!dialog)
+				MoveInput(value.Get<Vector2>());
 		}
 
 		public void OnLook(InputValue value)
 		{
-			if(cursorInputForLook)
+			if (cursorInputForLook)
 			{
 				LookInput(value.Get<Vector2>());
 			}
@@ -37,19 +37,73 @@ namespace StarterAssets
 
 		public void OnJump(InputValue value)
 		{
-			JumpInput(value.isPressed);
+			if(!dialog)
+				JumpInput(value.isPressed);
 		}
 
 		public void OnSprint(InputValue value)
 		{
-			SprintInput(value.isPressed);
+			if (!dialog)
+				SprintInput(value.isPressed);
 		}
 
 		public void OnSubmit(InputValue value)
 		{
-			DialogueInput(value.isPressed);
+            HighlightTrigger characterToTalkTo = GameManager.instance.highlightedCharacter;
+            if (characterToTalkTo != null)
+            {
+	            DialogueInput(value.isPressed);
+                characterToTalkTo.InitiateDialogue();
+            }
+        }
+
+		public void OnOption1(InputValue value)
+		{
+			if (dialog)
+			{
+				InkStoryPlayer.instance.MakeChoice(0);
+				if (GameManager.instance.IsStoryOver)
+				{
+					dialog = false;
+				}
+			}
 		}
-#endif
+
+		public void OnOption2(InputValue value)
+		{
+			if (dialog)
+			{
+                InkStoryPlayer.instance.MakeChoice(1);
+                if (GameManager.instance.IsStoryOver)
+                {
+                    dialog = false;
+                }
+            }
+		}
+
+		public void OnOption3(InputValue value)
+		{
+			if (dialog)
+			{
+                InkStoryPlayer.instance.MakeChoice(2);
+                if (GameManager.instance.IsStoryOver)
+                {
+                    dialog = false;
+                }
+            }
+		}
+
+		public void OnOption4(InputValue value)
+		{
+			if (dialog)
+			{
+                InkStoryPlayer.instance.MakeChoice(3);
+                if (GameManager.instance.IsStoryOver)
+                {
+                    dialog = false;
+                }
+            }
+		}
 
 		public void DialogueInput(bool isPressed)
 		{
@@ -85,6 +139,6 @@ namespace StarterAssets
 		{
 			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
 		}
-	}
+    }
 	
 }
